@@ -5,25 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainMenu">
+    tools:context=".MainMenu"
+    android:background="#C6CC6912"
+
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textSize="40dp"
-        android:text="menu bar goes here"
+        android:text="BurgerVan"
         android:layout_weight="1"/>
 
-    <GridView
-        android:id="@+id/main_menu_gridview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:numColumns="2"
-        android:verticalSpacing="4dp"
-        android:horizontalSpacing="2dp"
-        android:background="#C6CC6912"
         android:layout_weight="8"
-        />
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <GridView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:numColumns="2"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="10dp"
+            android:id="@+id/main_menu_gridview"
+            android:layout_marginRight="8dp"
+
+            />
+
+        <ListView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:id="@+id/main_menu_listview"
+            android:background="@color/white"
+
+            />
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

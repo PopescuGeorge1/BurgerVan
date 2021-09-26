@@ -2,6 +2,7 @@ package com.example.burgervan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,9 @@ import static com.example.burgervan.MainActivity.receipt;
 
 public class ReceiptWindow extends AppCompatActivity {
 
+
+    int []prices = {};
+
     ListView listView;
     Button back_btn;
     TextView itemName, itemQ, itemP, total;
@@ -28,7 +32,6 @@ public class ReceiptWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt_window);
-
         listView = findViewById(R.id.receipt_window);
 
 
@@ -45,14 +48,14 @@ public class ReceiptWindow extends AppCompatActivity {
 
 //        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.receipt_row, receipt);
         listView.setAdapter(customAdapter);
-        System.out.println("onCreateReceipt");
-        itemQ = findViewById(R.id.row_item_quantity);
-        itemP = findViewById(R.id.row_item_price);
-        total = findViewById(R.id.receipt_total);
+
 
     }
 
     private class CustomAdapter extends BaseAdapter {
+
+//        CustomAdapter (Context c, )
+
         @Override
         public int getCount() {
             return receipt.size();
@@ -71,8 +74,10 @@ public class ReceiptWindow extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = getLayoutInflater().inflate(R.layout.receipt_row, null);
-            itemName = findViewById(R.id.row_item_name);
+            TextView itemName = findViewById(R.id.row_item_name);
             String s = receipt.get(position);
+            System.out.println(s);
+            System.out.println("position"+position);
             if (itemName!=null)
                 itemName.setText(s);
 

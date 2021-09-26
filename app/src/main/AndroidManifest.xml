@@ -9,11 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BurgerVan">
-        <activity android:name=".FinalWindow"></activity>
-        <activity android:name=".ReceiptWindow" />
-        <activity android:name=".ItemWindow" />
-        <activity android:name=".SubMenu" />
-        <activity android:name=".MainMenu" />
+        <activity android:name=".ReceiptWindow" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ItemWindow" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".SubMenu" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MainMenu" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>

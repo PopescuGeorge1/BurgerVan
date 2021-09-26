@@ -1,18 +1,25 @@
 package com.example.burgervan;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.example.burgervan.MainActivity.quantity;
@@ -24,33 +31,36 @@ public class MainMenu extends AppCompatActivity {
 
     Button end_order;
     GridView gridView;
-    String [] menuNames = {"Burger", "Menus", "Drinks"};
-    int [] img = {R.drawable.burgers_menu_icon
+    ListView listView;
+    String [] menuNames = new String[]{"Burger", "Menus", "Drinks"};
+    int [] imgRes = {R.drawable.burgers_menu_icon
             , R.drawable.menus_menu_icon, R.drawable.drinks_menu_icon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
         gridView = findViewById(R.id.main_menu_gridview);
 
+        addToList();
 
-        Intent intent = getIntent();
-        String buy_this = intent.getStringExtra("buythis");
-        if(buy_this!=null) {
-            receipt.add(buy_this);
-            quantity.add(1);
-        }
 
-        CustomAdapter customAdapter = new CustomAdapter();
-        gridView.setAdapter(customAdapter);
+        CustomGridAdapter customGridAdapter = new CustomGridAdapter();
+        gridView.setAdapter(customGridAdapter);
+
 
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent12 = new Intent(getApplicationContext(), SubMenu.class);
             intent12.putExtra("menu_name", menuNames[position]);
             startActivity(intent12);
         });
+
+        listView = findViewById(R.id.main_menu_listview);
+//        CustomListAdapter customListAdapter = new CustomListAdapter();
+        if(!receipt.isEmpty()) {
+            MyAdapter myAdapter = new MyAdapter(this, receipt, imgRes);
+            listView.setAdapter(myAdapter);
+        }
 
         end_order = findViewById(R.id.finish_btn);
         end_order.setOnClickListener(v -> {
@@ -67,10 +77,10 @@ public class MainMenu extends AppCompatActivity {
         receipt.add("ceva");
     }
 
-    private class CustomAdapter extends BaseAdapter {
+    private class CustomGridAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return img.length;
+            return imgRes.length;
         }
 
         @Override
@@ -89,11 +99,56 @@ public class MainMenu extends AppCompatActivity {
 
             TextView textView = view1.findViewById(R.id.grid_image_name_menu);
             ImageView imageView = view1.findViewById(R.id.grid_image_menu);
+            //Adjust image size to match current format
+            imageView.setAdjustViewBounds(true);
+            imageView.setMaxWidth(70);
+            imageView.setMaxHeight(70);
+            imageView.setBackground(null);
 
             textView.setText(menuNames[position]);
-            imageView.setImageResource(img[position]);
+            imageView.setImageResource(imgRes[position]);
 
             return view1;
+        }
+    }
+
+    private void addToList(){
+        System.out.println("add to List used");
+        Intent intent = getIntent();
+
+        String buy_this = intent.getStringExtra("buythis");
+        if(buy_this!=null) {
+            receipt.add(buy_this);
+            quantity.add(1);
+        }
+    }
+
+    class MyAdapter extends ArrayAdapter<String>{
+
+        Context context;
+        ArrayList<String> rtitle;
+        int []rImg;
+
+        public MyAdapter(Context c, ArrayList<String> title, int []res) {
+            super(c, R.layout.receipt_row, menuNames);
+            this.context=c;
+            this.rtitle=title;
+            this.rImg=res;
+
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row = layoutInflater.inflate(R.layout.receipt_row, parent, false);
+            TextView names = row.findViewById(R.id.row_item_name);
+//            System.out.println("size"+rtitle.size());
+//            System.out.println("pos"+position);
+            if(!rtitle.isEmpty())
+                names.setText(rtitle.get(position));
+
+            return row;
         }
     }
 }

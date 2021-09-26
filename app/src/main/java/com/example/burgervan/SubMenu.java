@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class SubMenu extends AppCompatActivity {
 
     Button sub_menu_back_btn;
-
+    //probably i'll have to move these in the main activity in order to have them all together
     GridView gridView;
     String [] burgers_menu_names = {"Normal burger", "Healthy burger", "Deluxe burger"};
     int [] burgers_menu_img = {R.drawable.hamburger_simple, R.drawable.hamburger_healthy, R.drawable.hamburger_premium};
@@ -65,16 +65,20 @@ public class SubMenu extends AppCompatActivity {
                 switch (pos) {
                     case "Burger":
                         intent.putExtra("item_name", burgers_menu_names[position]);
+                        intent.putExtra("item_img", burgers_menu_img[position]);
                         break;
                     case "Menus":
                         intent.putExtra("item_name", menus_menu_names[position]);
+                        intent.putExtra("item_img", menus_menu_img[position]);
                         break;
                     case "Drinks":
                         intent.putExtra("item_name", drinks_menu_names[position]);
+                        intent.putExtra("item_img", drinks_menu_img[position]);
                         break;
                 }
 
                 startActivity(intent);
+
             }
         });
 
