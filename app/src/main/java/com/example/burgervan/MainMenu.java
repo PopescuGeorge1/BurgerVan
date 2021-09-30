@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static com.example.burgervan.MainActivity.quantity;
 import static com.example.burgervan.MainActivity.receipt;
-
+import static com.example.burgervan.MainActivity.price;
+import static com.example.burgervan.MainActivity.total_val;
 public class MainMenu extends AppCompatActivity {
 
 
-
+    TextView total;
     Button end_order;
     GridView gridView;
     ListView listView;
@@ -40,41 +38,39 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        total = findViewById(R.id.total_value);
+        addToOrder();
+
+        //set gridview
         gridView = findViewById(R.id.main_menu_gridview);
-
-        addToList();
-
-
         CustomGridAdapter customGridAdapter = new CustomGridAdapter();
         gridView.setAdapter(customGridAdapter);
-
-
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent12 = new Intent(getApplicationContext(), SubMenu.class);
             intent12.putExtra("menu_name", menuNames[position]);
             startActivity(intent12);
         });
 
+        //set listview
         listView = findViewById(R.id.main_menu_listview);
-//        CustomListAdapter customListAdapter = new CustomListAdapter();
+        MyAdapter myAdapter = null;
         if(!receipt.isEmpty()) {
-            MyAdapter myAdapter = new MyAdapter(this, receipt, imgRes);
-            listView.setAdapter(myAdapter);
-        }
+            System.out.println("main used");
+            myAdapter = new MyAdapter(this, receipt, price);
 
+        }
+        listView.setAdapter(myAdapter);
+
+        // go to receipt window button
         end_order = findViewById(R.id.finish_btn);
         end_order.setOnClickListener(v -> {
             Intent intent1 = new Intent(getApplicationContext(), ReceiptWindow.class);
             intent1.putStringArrayListExtra("order", receipt);
-            intent1.putIntegerArrayListExtra("quantity", quantity);
+//            intent1.putIntegerArrayListExtra("quantity", quantity);
             startActivity(intent1);
 
         });
 
-    }
-
-    public static void addItem(String x){
-        receipt.add("ceva");
     }
 
     private class CustomGridAdapter extends BaseAdapter {
@@ -99,6 +95,7 @@ public class MainMenu extends AppCompatActivity {
 
             TextView textView = view1.findViewById(R.id.grid_image_name_menu);
             ImageView imageView = view1.findViewById(R.id.grid_image_menu);
+
             //Adjust image size to match current format
             imageView.setAdjustViewBounds(true);
             imageView.setMaxWidth(70);
@@ -112,14 +109,18 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-    private void addToList(){
-        System.out.println("add to List used");
-        Intent intent = getIntent();
+    private void addToOrder(){
 
+        Intent intent = getIntent();
         String buy_this = intent.getStringExtra("buythis");
+        double price_this = intent.getDoubleExtra("item_price", 0);
         if(buy_this!=null) {
+            System.out.println("add to Order used");
             receipt.add(buy_this);
-            quantity.add(1);
+            price.add(price_this);
+            total_val+=price_this;
+            total.setText(Double.toString(total_val));
+
         }
     }
 
@@ -127,13 +128,17 @@ public class MainMenu extends AppCompatActivity {
 
         Context context;
         ArrayList<String> rtitle;
+        ArrayList<Double> rprice;
+
         int []rImg;
 
-        public MyAdapter(Context c, ArrayList<String> title, int []res) {
-            super(c, R.layout.receipt_row, menuNames);
+        public MyAdapter(Context c, ArrayList<String> title, ArrayList<Double> value) {
+            super(c, R.layout.receipt_row, receipt);
+            System.out.println("adapter constructor used");
             this.context=c;
             this.rtitle=title;
-            this.rImg=res;
+            this.rprice = value;
+//            this.rImg=res;
 
         }
 
@@ -142,12 +147,18 @@ public class MainMenu extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.receipt_row, parent, false);
-            TextView names = row.findViewById(R.id.row_item_name);
-//            System.out.println("size"+rtitle.size());
-//            System.out.println("pos"+position);
-            if(!rtitle.isEmpty())
-                names.setText(rtitle.get(position));
+            TextView name = row.findViewById(R.id.row_item_name);
+            TextView price = row.findViewById(R.id.row_item_price);
+//            System.out.println("getview used");
+            if(!rtitle.isEmpty()&&position>=0) {
 
+                name.setText(rtitle.get(position));
+                price.setText(rprice.get(position).toString());
+
+                //TODO create item object(name, price)
+                //make arrayList of objects
+                //extract info from objects
+            }
             return row;
         }
     }

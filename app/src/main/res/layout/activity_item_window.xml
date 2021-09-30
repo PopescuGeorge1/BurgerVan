@@ -59,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
-            android:text="Product recipe goes here"
-            android:id="@+id/item_recipe_tv"
+            android:text="Product price goes here"
+            android:id="@+id/item_price_tv"
             />
 
     </RelativeLayout>

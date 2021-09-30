@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@color/purple_200"
     android:id="@+id/parent">
 
@@ -23,13 +23,13 @@
 <!--        android:src="@drawable/subtract"-->
 <!--        android:layout_toEndOf="@id/row_item_name"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="quantity"
-        android:id="@+id/row_item_quantity"
-        android:layout_toEndOf="@id/row_item_name"
-        android:layout_margin="5dp"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Q"-->
+<!--        android:id="@+id/row_item_quantity"-->
+<!--        android:layout_marginRight="@id/row_item_name"-->
+<!--        android:layout_margin="5dp"/>-->
 
 <!--    <ImageView-->
 <!--        android:layout_width="wrap_content"-->
@@ -44,11 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="price"
-        android:layout_gravity="right"
         android:id="@+id/row_item_price"
-        android:layout_toEndOf="@id/row_item_quantity"
         android:layout_margin="5dp"/>
 
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -7,17 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import static com.example.burgervan.MainMenu.addItem;
+//import static com.example.burgervan.MainMenu.addItem;
 //import static com.example.burgervan.MainMenu.receipt;
 //import static com.example.burgervan.ReceiptWindow.receipt;
 
 public class ItemWindow extends AppCompatActivity {
 
     Button back_btn, buy_btn;
-    TextView textView;
+    TextView item_name, item_price;
     ImageView imageView;
 
     @Override
@@ -28,9 +27,9 @@ public class ItemWindow extends AppCompatActivity {
         Intent intent1 = getIntent();
         String return_target = intent1.getStringExtra("menu_name");
 
+        String this_item_name = intent1.getStringExtra("item_name");
+        double this_item_price = intent1.getDoubleExtra("item_price",0);
 
-        String item_name = intent1.getStringExtra("item_name");
-        System.out.println("item window: "+item_name);
         //--------------------------
         back_btn = findViewById(R.id.item_window_back_btn);
         back_btn.setOnClickListener(v -> {
@@ -55,22 +54,27 @@ public class ItemWindow extends AppCompatActivity {
             startActivity(intent);
         });
         //---------------------------
-
+//TODO import prices
         buy_btn = findViewById(R.id.item_descr_confirm_btn);
         buy_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainMenu.class);
 
-                intent.putExtra("buythis", item_name);
+                intent.putExtra("buythis", this_item_name);
+                intent.putExtra("item_price", this_item_price);
                 System.out.println("buy pressed");
                 startActivity(intent);
             }
         });
+
         imageView = findViewById(R.id.item_window_img);
         imageView.setImageResource(intent1.getIntExtra("item_img", 0));
-        textView = findViewById(R.id.item_descr_tv);
-        textView.setText(intent1.getStringExtra("item_name"));
+        this.item_name = findViewById(R.id.item_descr_tv);
+        this.item_name.setText(intent1.getStringExtra("item_name"));
+        item_price = findViewById(R.id.item_price_tv);
+        item_price.setText("Price"+Double.toString(this_item_price));
+
 
 //        imageView = findViewById(R.id.item_window_img);
 //        imageView.setImageResource(intent1.getIntExtra("item_img", 0));

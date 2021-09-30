@@ -20,13 +20,13 @@ public class SubMenu extends AppCompatActivity {
     GridView gridView;
     String [] burgers_menu_names = {"Normal burger", "Healthy burger", "Deluxe burger"};
     int [] burgers_menu_img = {R.drawable.hamburger_simple, R.drawable.hamburger_healthy, R.drawable.hamburger_premium};
-
+    double []burgers_menu_price = {1.5, 2.5, 4};
     String [] menus_menu_names = {"DoubleTrouble", "Happy Belly", "King"};
     int [] menus_menu_img = {R.drawable.doubletrouble_menu, R.drawable.happybelly_menu, R.drawable.king_menu};
-
+    double []menus_menu_price = {4, 5.5, 8};
     String [] drinks_menu_names = {"Coca-Cola", "7Up", "Water"};
     int [] drinks_menu_img = {R.drawable.drink_menu_cola, R.drawable.drink_menu_7up, R.drawable.drink_menu_water};
-
+    double []drinks_menu_price = {0.75, 0.75, 1.25};
     String pos;
 
     @Override
@@ -66,14 +66,19 @@ public class SubMenu extends AppCompatActivity {
                     case "Burger":
                         intent.putExtra("item_name", burgers_menu_names[position]);
                         intent.putExtra("item_img", burgers_menu_img[position]);
+                        intent.putExtra("item_price", burgers_menu_price[position]);
+
                         break;
                     case "Menus":
                         intent.putExtra("item_name", menus_menu_names[position]);
                         intent.putExtra("item_img", menus_menu_img[position]);
+                        intent.putExtra("item_price", menus_menu_price[position]);
                         break;
                     case "Drinks":
                         intent.putExtra("item_name", drinks_menu_names[position]);
                         intent.putExtra("item_img", drinks_menu_img[position]);
+                        intent.putExtra("item_price", drinks_menu_price[position]);
+
                         break;
                 }
 
