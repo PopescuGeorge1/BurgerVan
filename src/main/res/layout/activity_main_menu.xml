@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainMenu"
-    android:background="#C6CC6912"
+    android:background="@drawable/main_menu_background"
 
     >
 
@@ -51,7 +51,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
 
@@ -63,7 +62,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="finish"
+            android:text="checkout"
             android:layout_centerInParent="true"
             android:id="@+id/finish_btn"/>
 
