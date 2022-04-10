@@ -25,7 +25,7 @@ public class ReceiptWindow extends AppCompatActivity {
     int []prices = {};
 
     ListView listView;
-    Button back_btn;
+    Button back_btn, extra;
     TextView itemName, itemQ, itemP, total;
 
     @Override
@@ -43,7 +43,14 @@ public class ReceiptWindow extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        extra = findViewById(R.id.extra_btn);
+        extra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(), addExtraMenu.class);
+                startActivity(intent);
+            }
+        });
         CustomAdapter customAdapter = new CustomAdapter();
 
 //        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.receipt_row, receipt);
@@ -54,7 +61,6 @@ public class ReceiptWindow extends AppCompatActivity {
 
     private class CustomAdapter extends BaseAdapter {
 
-//        CustomAdapter (Context c, )
 
         @Override
         public int getCount() {

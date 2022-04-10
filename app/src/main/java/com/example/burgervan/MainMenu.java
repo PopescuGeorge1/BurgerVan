@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,11 +21,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import static com.example.burgervan.MainActivity.receipt;
-import static com.example.burgervan.MainActivity.price;
 import static com.example.burgervan.MainActivity.total_val;
+import static com.example.burgervan.MainActivity.objects;
+
 public class MainMenu extends AppCompatActivity {
 
 
@@ -30,15 +32,14 @@ public class MainMenu extends AppCompatActivity {
     Button end_order;
     GridView gridView;
     ListView listView;
-    String [] menuNames = new String[]{"Burger", "Menus", "Drinks"};
-    int [] imgRes = {R.drawable.burgers_menu_icon
-            , R.drawable.menus_menu_icon, R.drawable.drinks_menu_icon};
+    FoodBase foodBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         total = findViewById(R.id.total_value);
+        foodBase = new FoodBase();
         addToOrder();
 
         //set gridview
@@ -47,16 +48,16 @@ public class MainMenu extends AppCompatActivity {
         gridView.setAdapter(customGridAdapter);
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent12 = new Intent(getApplicationContext(), SubMenu.class);
-            intent12.putExtra("menu_name", menuNames[position]);
+            intent12.putExtra("menu_name", foodBase.getMenuNames()[position]);
             startActivity(intent12);
         });
 
         //set listview
         listView = findViewById(R.id.main_menu_listview);
         MyAdapter myAdapter = null;
-        if(!receipt.isEmpty()) {
+        if(!objects.isEmpty()) {
             System.out.println("main used");
-            myAdapter = new MyAdapter(this, receipt, price);
+            myAdapter = new MyAdapter(this);
 
         }
         listView.setAdapter(myAdapter);
@@ -76,7 +77,7 @@ public class MainMenu extends AppCompatActivity {
     private class CustomGridAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return imgRes.length;
+            return foodBase.getImgMenuRes().length;
         }
 
         @Override
@@ -102,8 +103,8 @@ public class MainMenu extends AppCompatActivity {
             imageView.setMaxHeight(70);
             imageView.setBackground(null);
 
-            textView.setText(menuNames[position]);
-            imageView.setImageResource(imgRes[position]);
+            textView.setText(foodBase.getMenuNames()[position]);
+            imageView.setImageResource(foodBase.getImgMenuRes()[position]);
 
             return view1;
         }
@@ -117,28 +118,28 @@ public class MainMenu extends AppCompatActivity {
         if(buy_this!=null) {
             System.out.println("add to Order used");
             receipt.add(buy_this);
-            price.add(price_this);
-            total_val+=price_this;
-            total.setText(Double.toString(total_val));
+            makeTotal();
 
         }
+
+    }
+
+    public void makeTotal(){
+        total_val=0;
+        for (int i=0;i<objects.size();i++){
+            total_val+=objects.get(i).getPrice()*objects.get(i).getQ();
+        }
+        total.setText(Double.toString(total_val));
     }
 
     class MyAdapter extends ArrayAdapter<String>{
 
         Context context;
-        ArrayList<String> rtitle;
-        ArrayList<Double> rprice;
+        ImageView add, subtract;
 
-        int []rImg;
-
-        public MyAdapter(Context c, ArrayList<String> title, ArrayList<Double> value) {
+        public MyAdapter(Context c) {
             super(c, R.layout.receipt_row, receipt);
-            System.out.println("adapter constructor used");
             this.context=c;
-            this.rtitle=title;
-            this.rprice = value;
-//            this.rImg=res;
 
         }
 
@@ -149,17 +150,56 @@ public class MainMenu extends AppCompatActivity {
             View row = layoutInflater.inflate(R.layout.receipt_row, parent, false);
             TextView name = row.findViewById(R.id.row_item_name);
             TextView price = row.findViewById(R.id.row_item_price);
-//            System.out.println("getview used");
-            if(!rtitle.isEmpty()&&position>=0) {
+            TextView quantity = row.findViewById(R.id.row_item_quantity);
+            add = row.findViewById(R.id.add_item);
+            subtract = row.findViewById(R.id.subtract_item);
+            if(!objects.isEmpty()&&position>=0) {
 
-                name.setText(rtitle.get(position));
-                price.setText(rprice.get(position).toString());
+                name.setText(objects.get(position).getName());
+                price.setText(objects.get(position).getPrice().toString());
+                quantity.setText(objects.get(position).getQ().toString());
 
-                //TODO create item object(name, price)
-                //make arrayList of objects
-                //extract info from objects
             }
+
+            add.setOnClickListener(v -> {
+                objects.get(position).setQ(objects.get(position).getQ()+1);
+                quantity.setText(objects.get(position).getQ().toString());
+                makeTotal();
+            });
+
+            subtract.setOnClickListener(v -> {
+                if(objects.get(position).getQ()>0) {
+                    objects.get(position).setQ(objects.get(position).getQ() - 1);
+                    quantity.setText(objects.get(position).getQ().toString());
+                    makeTotal();
+                }
+            });
+
             return row;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_option_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_1:
+                //something
+                return true;
+            case R.id.item_2:
+                //something
+                return true;
+            case R.id.item_3:
+                //something
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

@@ -8,6 +8,23 @@
     android:orientation="vertical"
     tools:context=".SubMenu">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="40dp"
+            android:id="@+id/sub_menu_title"
+            android:gravity="center"
+            android:text="Title"/>
+
+    </RelativeLayout>
+
     <GridView
         android:id="@+id/main_submenu_gridview"
         android:layout_width="match_parent"

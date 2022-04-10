@@ -18,27 +18,19 @@ public class SubMenu extends AppCompatActivity {
     Button sub_menu_back_btn;
     //probably i'll have to move these in the main activity in order to have them all together
     GridView gridView;
-    String [] burgers_menu_names = {"Normal burger", "Healthy burger", "Deluxe burger"};
-    int [] burgers_menu_img = {R.drawable.hamburger_simple, R.drawable.hamburger_healthy, R.drawable.hamburger_premium};
-    double []burgers_menu_price = {1.5, 2.5, 4};
-    String [] menus_menu_names = {"DoubleTrouble", "Happy Belly", "King"};
-    int [] menus_menu_img = {R.drawable.doubletrouble_menu, R.drawable.happybelly_menu, R.drawable.king_menu};
-    double []menus_menu_price = {4, 5.5, 8};
-    String [] drinks_menu_names = {"Coca-Cola", "7Up", "Water"};
-    int [] drinks_menu_img = {R.drawable.drink_menu_cola, R.drawable.drink_menu_7up, R.drawable.drink_menu_water};
-    double []drinks_menu_price = {0.75, 0.75, 1.25};
+    FoodBase foodBase;
     String pos;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_menu);
-
+        title = findViewById(R.id.sub_menu_title);
         Intent intent = getIntent();
-
+        foodBase = new FoodBase();
         pos = intent.getStringExtra("menu_name");
-        System.out.println(pos);
-
+        title.setText(pos);
         //-----BACK BUTTON
         sub_menu_back_btn = findViewById(R.id.sub_menu_back_btn);
         sub_menu_back_btn.setOnClickListener(new View.OnClickListener() {
@@ -64,20 +56,20 @@ public class SubMenu extends AppCompatActivity {
                 intent.putExtra("menu_name", pos);
                 switch (pos) {
                     case "Burger":
-                        intent.putExtra("item_name", burgers_menu_names[position]);
-                        intent.putExtra("item_img", burgers_menu_img[position]);
-                        intent.putExtra("item_price", burgers_menu_price[position]);
+                        intent.putExtra("item_name", foodBase.getBurgers_menu_names()[position]);
+                        intent.putExtra("item_img", foodBase.getBurgers_menu_img()[position]);
+                        intent.putExtra("item_price", foodBase.getBurgers_menu_price()[position]);
 
                         break;
                     case "Menus":
-                        intent.putExtra("item_name", menus_menu_names[position]);
-                        intent.putExtra("item_img", menus_menu_img[position]);
-                        intent.putExtra("item_price", menus_menu_price[position]);
+                        intent.putExtra("item_name", foodBase.getMenus_menu_names()[position]);
+                        intent.putExtra("item_img", foodBase.getMenus_menu_img()[position]);
+                        intent.putExtra("item_price", foodBase.getMenus_menu_price()[position]);
                         break;
                     case "Drinks":
-                        intent.putExtra("item_name", drinks_menu_names[position]);
-                        intent.putExtra("item_img", drinks_menu_img[position]);
-                        intent.putExtra("item_price", drinks_menu_price[position]);
+                        intent.putExtra("item_name", foodBase.getDrinks_menu_names()[position]);
+                        intent.putExtra("item_img", foodBase.getDrinks_menu_img()[position]);
+                        intent.putExtra("item_price", foodBase.getDrinks_menu_price()[position]);
 
                         break;
                 }
@@ -93,7 +85,7 @@ public class SubMenu extends AppCompatActivity {
     private class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return burgers_menu_img.length;
+            return foodBase.getBurgers_menu_img().length;
         }
 
         @Override
@@ -113,18 +105,21 @@ public class SubMenu extends AppCompatActivity {
             TextView textView = view1.findViewById(R.id.grid_image_name_menu);
             ImageView imageView = view1.findViewById(R.id.grid_image_menu);
             if(pos.equals("Burger")) {
-                textView.setText(burgers_menu_names[position]);
-                imageView.setImageResource(burgers_menu_img[position]);
+                textView.setText(foodBase.getBurgers_menu_names()[position]);
+                imageView.setImageResource(foodBase.getBurgers_menu_img()[position]);
             }
             if(pos.equals("Menus")){
-                textView.setText(menus_menu_names[position]);
-                imageView.setImageResource(menus_menu_img[position]);
+                textView.setText(foodBase.getMenus_menu_names()[position]);
+                imageView.setImageResource(foodBase.getMenus_menu_img()[position]);
             }
             if(pos.equals("Drinks")){
-                textView.setText(drinks_menu_names[position]);
-                imageView.setImageResource(drinks_menu_img[position]);
+                textView.setText(foodBase.getDrinks_menu_names()[position]);
+                imageView.setImageResource(foodBase.getDrinks_menu_img()[position]);
             }
             return view1;
         }
     }
+
+
+
 }

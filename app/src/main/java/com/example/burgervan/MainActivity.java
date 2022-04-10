@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Integer> quantity;
     public static ArrayList<String> receipt;
     public static ArrayList<Double> price;
+    public static ArrayList<itemObj> objects;
     public static double total_val;
     Button button;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         receipt = new ArrayList<String>();
         quantity = new ArrayList<>();
         price = new ArrayList<>();
+        objects = new ArrayList<>();
 
     }
 }

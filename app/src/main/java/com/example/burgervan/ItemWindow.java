@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static com.example.burgervan.MainActivity.objects;
+
 //import static com.example.burgervan.MainMenu.addItem;
 //import static com.example.burgervan.MainMenu.receipt;
 //import static com.example.burgervan.ReceiptWindow.receipt;
@@ -54,7 +56,7 @@ public class ItemWindow extends AppCompatActivity {
             startActivity(intent);
         });
         //---------------------------
-//TODO import prices
+
         buy_btn = findViewById(R.id.item_descr_confirm_btn);
         buy_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +65,7 @@ public class ItemWindow extends AppCompatActivity {
 
                 intent.putExtra("buythis", this_item_name);
                 intent.putExtra("item_price", this_item_price);
+                objects.add(new itemObj(this_item_name, this_item_price, "description"));
                 System.out.println("buy pressed");
                 startActivity(intent);
             }
