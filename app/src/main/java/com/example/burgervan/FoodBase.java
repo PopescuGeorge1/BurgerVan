@@ -17,8 +17,11 @@ public class FoodBase {
     private final int [] imgMenuRes = {R.drawable.burgers_menu_icon, R.drawable.menus_menu_icon, R.drawable.drinks_menu_icon};
 
     //Extras
-    private final String [] extraItemNames = {"garlic", "tomato", "barbeque", "fries", "mustard", "tzatziki"};
+    private final String [] extraItemNames = {"Garlic Sauce", "Tomato sauce", "Barbeque sauce", "French Fries", "Mustard", "Tzatziki"};
+    private final double [] extraItemPrices = {0.5, 0.5, 0.75, 1.25, 0.5, 0.75};
     private final int [] extraImgRes = {R.drawable.garlic_sauce, R.drawable.tomato_sauce, R.drawable.barbeque_sauce, R.drawable.french_fries, R.drawable.mustard_sauce, R.drawable.tzatziki_sauce};
+
+    public double[] getExtraItemPrices() {return extraItemPrices;}
 
     public String[] getExtraItemNames() {
         return extraItemNames;

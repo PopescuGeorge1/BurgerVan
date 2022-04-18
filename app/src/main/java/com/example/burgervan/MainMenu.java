@@ -33,6 +33,7 @@ public class MainMenu extends AppCompatActivity {
     GridView gridView;
     ListView listView;
     FoodBase foodBase;
+    MainActivity mainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,9 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         total = findViewById(R.id.total_value);
         foodBase = new FoodBase();
-        addToOrder();
+        mainActivity=new MainActivity();
+//        addToOrder();
+makeTotal();
 
         //set gridview
         gridView = findViewById(R.id.main_menu_gridview);
@@ -66,7 +69,7 @@ public class MainMenu extends AppCompatActivity {
         end_order = findViewById(R.id.finish_btn);
         end_order.setOnClickListener(v -> {
             Intent intent1 = new Intent(getApplicationContext(), ReceiptWindow.class);
-            intent1.putStringArrayListExtra("order", receipt);
+//            intent1.putStringArrayListExtra("order", receipt);
 //            intent1.putIntegerArrayListExtra("quantity", quantity);
             startActivity(intent1);
 
@@ -117,7 +120,7 @@ public class MainMenu extends AppCompatActivity {
         double price_this = intent.getDoubleExtra("item_price", 0);
         if(buy_this!=null) {
             System.out.println("add to Order used");
-            receipt.add(buy_this);
+//            receipt.add(buy_this);
             makeTotal();
 
         }
@@ -132,13 +135,13 @@ public class MainMenu extends AppCompatActivity {
         total.setText(Double.toString(total_val));
     }
 
-    class MyAdapter extends ArrayAdapter<String>{
-
+    class MyAdapter extends ArrayAdapter<itemObj>{
+//
         Context context;
         ImageView add, subtract;
 
         public MyAdapter(Context c) {
-            super(c, R.layout.receipt_row, receipt);
+            super(c, R.layout.receipt_row, objects);
             this.context=c;
 
         }
@@ -189,14 +192,12 @@ public class MainMenu extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_1:
+            case R.id.settings_menu_item:
                 //something
                 return true;
-            case R.id.item_2:
-                //something
-                return true;
-            case R.id.item_3:
-                //something
+            case R.id.about_menu_item:
+                Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -14,27 +14,41 @@ import android.widget.TextView;
 import static com.example.burgervan.MainActivity.objects;
 import static com.example.burgervan.MainActivity.receipt;
 
+
 public class addExtraMenu extends AppCompatActivity {
 
     GridView gridView;
     FoodBase foodBase;
+    MainActivity mainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_extra_menu);
         foodBase = new FoodBase();
+        mainActivity = new MainActivity();
         gridView = findViewById(R.id.extra_menu_gridview);
         CustomGridAdapter customGridAdapter = new CustomGridAdapter();
         gridView.setAdapter(customGridAdapter);
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent12 = new Intent(getApplicationContext(), ReceiptWindow.class);
-//            intent12.putExtra("menu_name", extraNames[position]);
-            receipt.add("garlic");
-            objects.add(new itemObj("garlic sauce", 2.00, "description"));
+//          intent12.putExtra("menu_name", extraNames[position]);
+
+
+
+
+
+            receipt.add(foodBase.getExtraItemNames()[position]);
+            objects.add(new itemObj(foodBase.getExtraItemNames()[position], 2.00, "description"));
             intent12.putStringArrayListExtra("order", receipt);
 
             startActivity(intent12);
+
+            //intent.putExtra("buythis", this_item_name);
+            //                intent.putExtra("item_price", this_item_price);
+            //                objects.add(new itemObj(this_item_name, this_item_price, "description"));
+            //                System.out.println("buy pressed");
+            //                startActivity(intent);
 
         });
 
