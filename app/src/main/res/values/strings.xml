@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BurgerVan</string>
+    <string name="empty">empty</string>
 </resources>

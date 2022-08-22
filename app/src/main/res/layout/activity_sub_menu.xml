@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SubMenu">
+    tools:context=".SubMenu"
+    android:background="@drawable/fast_food_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_alignParentBottom="true"
+        android:background="@color/beige"
         android:gravity="center_vertical">
 
         <TextView

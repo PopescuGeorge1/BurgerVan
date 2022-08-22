@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BurgerVan">
-        <activity android:name=".addExtraMenu"></activity>
+        <activity android:name=".bundleForDatabase"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".OrderLocation" />
+        <activity android:name=".addExtraMenu" />
         <activity
             android:name=".ReceiptWindow"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

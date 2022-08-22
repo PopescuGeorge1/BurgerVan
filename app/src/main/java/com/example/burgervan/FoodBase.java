@@ -1,7 +1,7 @@
 package com.example.burgervan;
 
 public class FoodBase {
-    //Sub-Menus
+    //Sub-Menus + items
     private final String [] burgers_menu_names = {"Normal burger", "Healthy burger", "Deluxe burger"};
     private final int [] burgers_menu_img = {R.drawable.hamburger_simple, R.drawable.hamburger_healthy, R.drawable.hamburger_premium};
     private final double []burgers_menu_price = {1.5, 2.5, 4};
